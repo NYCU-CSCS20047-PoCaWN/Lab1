@@ -43,8 +43,6 @@ docker compose up # add -d to run in background mode
 Destroy the established container resource after testing:
 
 ```bash
-# Remove established containers (local images)
-docker compose -f docker-compose-build.yaml rm
 # Remove established containers (remote images)
 docker compose rm
 ```
