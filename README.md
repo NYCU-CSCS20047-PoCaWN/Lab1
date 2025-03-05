@@ -10,8 +10,6 @@ You can setup your own config in [config](./config) folder and [docker-compose.y
 - [Docker Engine](https://docs.docker.com/engine/install): needed to run the Free5GC containers
 - [Docker Compose v2](https://docs.docker.com/compose/install): needed to bootstrap the free5GC stack
 
-**Note: AVX for MongoDB**: some HW does not support MongoDB releases above`4.4` due to use of the new AVX instructions set. To verify if your CPU is compatible you can check CPU flags by running `grep avx /proc/cpuinfo`. A workaround is suggested [here](https://github.com/free5gc/free5gc-compose/issues/30#issuecomment-897627049).
-
 ## Start free5gc
 
 Because we need to create tunnel interface, we need to use privileged container with root permission.
@@ -21,27 +19,8 @@ Because we need to create tunnel interface, we need to use privileged container 
 ```bash
 docker compose pull
 ```
+> If you're curious about how to manually build a local Docker image using a Dockerfile, you can refer to the official [free5gc Docker Compose](https://github.com/free5gc/free5gc-compose) project.
 
-### [Optional] Build docker images from local sources
-
-```bash
-# Clone the project
-git clone https://github.com/free5gc/free5gc-compose.git
-cd free5gc-compose
-
-# clone free5gc sources
-cd base
-git clone --recursive -j `nproc` https://github.com/free5gc/free5gc.git
-cd ..
-
-# Build the images
-make all
-docker compose -f docker-compose-build.yaml build
-
-# Alternatively you can build specific NF image e.g.:
-make amf
-docker compose -f docker-compose-build.yaml build free5gc-amf
-```
 
 Note:
 
@@ -53,11 +32,10 @@ docker rmi $(docker images -f "dangling=true" -q)
 
 ### Run free5GC
 
-You can create free5GC containers based on local images or docker hub images:
+Create free5GC containers based on docker hub images:
 
 ```bash
-# use local images
-docker compose -f docker-compose-build.yaml up
+
 # use images from docker hub
 docker compose up # add -d to run in background mode
 ```
@@ -122,26 +100,6 @@ ue:
 ```
 
 5. Run `docker-compose.yaml`
-
-### srsRAN Notes
-
-You can check this [issue](https://github.com/free5gc/free5gc-compose/issues/94) for some sample configuration files of srsRAN + free5GC
-
-## Integration of WebUI with Nginx reverse proxy
-
-Here you can find helpful guidelines on the integration of Nginx reverse proxy to set it in front of the WebUI: https://github.com/free5gc/free5gc-compose/issues/55#issuecomment-1146648600
-
-## ULCL Configuration
-
-To start the core with a I-UPF and PSA-UPF ULCL configuration, use
-
-```bash
-docker compose -f docker-compose-ulcl.yaml up
-```
-
-> Note: This configuration have been tested using release [free5gc-compose v4.0.0](https://github.com/free5gc/free5gc-compose/tree/v4.0.0)
-
-Check out the used configuration files at `config/ULCL`.
 
 ## Reference
 
