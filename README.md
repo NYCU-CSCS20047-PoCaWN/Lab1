@@ -6,7 +6,7 @@ You can setup your own config in [config](./config) folder and [docker-compose.y
 
 ## Prerequisites
 
-- [GTP5G kernel module](https://github.com/free5gc/gtp5g): needed to run the UPF (Currently, UPF only supports GTP5G versions 0.9.5 (use git clone --branch v0.9.5 --depth 1 https://github.com/free5gc/gtp5g.git).)
+- [GTP5G kernel module](https://github.com/free5gc/gtp5g): needed to run the UPF (Currently, UPF only supports GTP5G versions 0.9.9 (use git clone --branch v0.9.9 --depth 1 https://github.com/free5gc/gtp5g.git).)
 - [Docker Engine](https://docs.docker.com/engine/install): needed to run the Free5GC containers
 - [Docker Compose v2](https://docs.docker.com/compose/install): needed to bootstrap the free5GC stack
 
@@ -18,9 +18,7 @@ Because we need to create tunnel interface, we need to use privileged container 
 ### [Optional] Build docker images from local sources
 
 ```bash
-# Clone the project
-git clone https://github.com/free5gc/free5gc-compose.git
-cd free5gc-compose
+cd Lab1
 
 # clone free5gc sources
 cd base
@@ -31,9 +29,6 @@ cd ..
 make all
 docker compose -f docker-compose-build.yaml build
 
-# Alternatively you can build specific NF image e.g.:
-make amf
-docker compose -f docker-compose-build.yaml build free5gc-amf
 ```
 
 Note:
@@ -51,8 +46,7 @@ You can create free5GC containers based on local images or docker hub images:
 ```bash
 # use local images
 docker compose -f docker-compose-build.yaml up
-# use images from docker hub
-docker compose up # add -d to run in background mode
+
 ```
 
 Destroy the established container resource after testing:
